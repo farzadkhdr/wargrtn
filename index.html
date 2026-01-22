@@ -3,787 +3,611 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سیستەمی وەرگرتنی داواکاریەکان</title>
+    <title>سیستەمی سپۆنسەرکردن | فاکتۆر</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-color: #2c3e50;
-            --secondary-color: #3498db;
-            --accent-color: #e74c3c;
-            --light-color: #ecf0f1;
-            --dark-color: #2c3e50;
-            --success-color: #27ae60;
-            --warning-color: #f39c12;
-            --transition: all 0.3s ease;
-            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            font-family: 'Noto Sans Arabic', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: var(--dark-color);
+            background-color: #f5f7fa;
+            color: #333;
+            padding: 20px;
             line-height: 1.6;
-            min-height: 100vh;
         }
         
         .container {
-            max-width: 1400px;
+            max-width: 800px;
             margin: 0 auto;
-            padding: 0 20px;
         }
         
-        /* هێدەر */
         header {
-            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
             color: white;
-            padding: 20px 0;
-            box-shadow: var(--shadow);
-            position: relative;
-            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
-            background-size: cover;
-        }
-        
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .logo {
+        header h1 {
             font-size: 28px;
-            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            opacity: 0.9;
+            font-size: 16px;
+        }
+        
+        .creator {
+            font-size: 14px;
+            margin-top: 10px;
+            color: #e0e0ff;
+        }
+        
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .input-section, .preview-section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .section-title {
+            font-size: 20px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
             display: flex;
             align-items: center;
             gap: 10px;
         }
         
-        .logo i {
-            color: #f1c40f;
+        .section-title i {
+            color: #6a11cb;
         }
         
-        .stats {
-            display: flex;
-            gap: 30px;
+        .form-group {
+            margin-bottom: 20px;
         }
         
-        .stat-item {
-            text-align: center;
-        }
-        
-        .stat-number {
-            font-size: 28px;
-            font-weight: 700;
-            color: #f1c40f;
-        }
-        
-        .stat-label {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-        
-        /* بەشەکان */
-        .tabs {
-            display: flex;
-            background: white;
-            border-radius: 10px 10px 0 0;
-            overflow: hidden;
-            margin-top: 40px;
-            box-shadow: var(--shadow);
-        }
-        
-        .tab {
-            flex: 1;
-            padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 600;
-            border-bottom: 3px solid transparent;
-        }
-        
-        .tab:hover {
-            background: #f8f9fa;
-        }
-        
-        .tab.active {
-            background: white;
-            border-bottom: 3px solid var(--secondary-color);
-            color: var(--secondary-color);
-        }
-        
-        /* ناوەڕۆکی بەشەکان */
-        .tab-content {
-            display: none;
-            background: white;
-            border-radius: 0 0 10px 10px;
-            padding: 30px;
-            box-shadow: var(--shadow);
-            margin-bottom: 40px;
-        }
-        
-        .tab-content.active {
+        label {
             display: block;
-            animation: fadeIn 0.5s ease;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* خشتە */
-        .requests-table {
+        input, select {
             width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        
-        .requests-table th {
-            background: #f8f9fa;
-            padding: 15px;
-            text-align: right;
-            font-weight: 600;
-            border-bottom: 2px solid #dee2e6;
-            color: var(--primary-color);
-        }
-        
-        .requests-table td {
-            padding: 15px;
-            border-bottom: 1px solid #dee2e6;
-            text-align: right;
-        }
-        
-        .requests-table tr:hover {
-            background: #f8f9fa;
-        }
-        
-        .status {
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-        
-        .status.pending {
-            background: #fff3cd;
-            color: #856404;
-        }
-        
-        .status.accepted {
-            background: #d4edda;
-            color: #155724;
-        }
-        
-        .status.rejected {
-            background: #f8d7da;
-            color: #721c24;
-        }
-        
-        .action-btn {
-            padding: 8px 15px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: var(--transition);
-            font-family: 'Noto Sans Arabic', sans-serif;
-            margin-left: 5px;
-        }
-        
-        .btn-accept {
-            background: var(--success-color);
-            color: white;
-        }
-        
-        .btn-accept:hover {
-            background: #219653;
-        }
-        
-        .btn-reject {
-            background: var(--accent-color);
-            color: white;
-        }
-        
-        .btn-reject:hover {
-            background: #c0392b;
-        }
-        
-        .btn-view {
-            background: var(--secondary-color);
-            color: white;
-        }
-        
-        .btn-view:hover {
-            background: #2980b9;
-        }
-        
-        /* بۆکسەکانی زانیاری */
-        .info-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 30px;
-        }
-        
-        .info-card {
-            background: white;
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-        
-        .info-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-        }
-        
-        .info-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .info-card-title {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--primary-color);
-        }
-        
-        .info-card-icon {
-            font-size: 30px;
-            color: var(--secondary-color);
-        }
-        
-        .info-card-content {
+            padding: 12px 15px;
+            border: 2px solid #e1e5eb;
+            border-radius: 8px;
             font-size: 16px;
-            color: #6c757d;
+            transition: border-color 0.3s;
         }
         
-        /* فووتەر */
-        footer {
-            background: var(--primary-color);
-            color: white;
-            padding: 30px 0;
-            margin-top: 80px;
+        input:focus, select:focus {
+            border-color: #6a11cb;
+            outline: none;
+        }
+        
+        .sponsor-type {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .sponsor-option {
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .sponsor-option input {
+            display: none;
+        }
+        
+        .sponsor-option label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            border: 2px solid #e1e5eb;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
             text-align: center;
         }
         
-        .footer-content {
+        .sponsor-option label:hover {
+            border-color: #a8c6ff;
+            background-color: #f8fbff;
+        }
+        
+        .sponsor-option input:checked + label {
+            border-color: #6a11cb;
+            background-color: #f0f4ff;
+            color: #6a11cb;
+            font-weight: 600;
+        }
+        
+        .sponsor-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 14px 25px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .btn-generate {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: white;
+        }
+        
+        .btn-generate:hover {
+            background: linear-gradient(to right, #5a0db5, #1c68f0);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
+        }
+        
+        .btn-pdf {
+            background: linear-gradient(to right, #ff416c, #ff4b2b);
+            color: white;
+        }
+        
+        .btn-pdf:hover {
+            background: linear-gradient(to right, #e8355f, #e83e1f);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 65, 108, 0.3);
+        }
+        
+        .btn-print {
+            background: linear-gradient(to right, #11998e, #38ef7d);
+            color: white;
+        }
+        
+        .btn-print:hover {
+            background: linear-gradient(to right, #0e877d, #2edb6f);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(17, 153, 142, 0.3);
+        }
+        
+        /* فاکتۆرەکە */
+        .invoice {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 0 auto;
+            border: 1px solid #eaeaea;
+        }
+        
+        .invoice-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px dashed #eaeaea;
+        }
+        
+        .invoice-title {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .invoice-subtitle {
+            color: #7f8c8d;
+            font-size: 16px;
+        }
+        
+        .invoice-logo {
+            font-size: 40px;
+            color: #6a11cb;
+            margin-bottom: 10px;
+        }
+        
+        .invoice-info {
             display: flex;
             justify-content: space-between;
+            margin-bottom: 30px;
             flex-wrap: wrap;
-            gap: 30px;
+            gap: 20px;
         }
         
-        .footer-section {
+        .invoice-from, .invoice-to {
             flex: 1;
-            min-width: 250px;
+            min-width: 200px;
         }
         
-        .footer-section h3 {
+        .info-title {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .info-detail {
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .info-value {
+            color: #333;
+        }
+        
+        .invoice-details {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .detail-value {
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .total-row {
+            background-color: #f0f4ff;
+            padding: 15px;
+            border-radius: 8px;
             font-size: 20px;
-            margin-bottom: 20px;
-            position: relative;
-            padding-bottom: 10px;
+            font-weight: 700;
+            color: #2c3e50;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
         }
         
-        .footer-section h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 50px;
-            height: 3px;
-            background: var(--secondary-color);
-        }
-        
-        .footer-section p {
-            margin-bottom: 15px;
-            color: #bdc3c7;
-        }
-        
-        .footer-section i {
-            margin-left: 10px;
-            color: var(--secondary-color);
-        }
-        
-        .copyright {
+        .invoice-footer {
             text-align: center;
-            padding-top: 30px;
             margin-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #bdc3c7;
+            padding-top: 20px;
+            border-top: 2px dashed #eaeaea;
+            color: #7f8c8d;
+            font-size: 14px;
         }
         
-        /* بۆ جۆری موبایل */
+        .signature {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .signature-box {
+            text-align: center;
+        }
+        
+        .signature-line {
+            width: 150px;
+            height: 1px;
+            background-color: #ccc;
+            margin: 20px auto 5px;
+        }
+        
         @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 20px;
+            .sponsor-option {
+                min-width: 100%;
             }
             
-            .stats {
+            button {
+                min-width: 100%;
+            }
+            
+            .invoice-info {
+                flex-direction: column;
+            }
+        }
+        
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            
+            .invoice, .invoice * {
+                visibility: visible;
+            }
+            
+            .invoice {
+                position: absolute;
+                left: 0;
+                top: 0;
                 width: 100%;
-                justify-content: space-around;
+                box-shadow: none;
+                border: none;
             }
             
-            .tabs {
-                flex-direction: column;
-            }
-            
-            .requests-table {
-                display: block;
-                overflow-x: auto;
-            }
-            
-            .info-cards {
-                grid-template-columns: 1fr;
-            }
-            
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .footer-section h3::after {
-                right: 50%;
-                transform: translateX(50%);
+            .btn-group, .input-section, header {
+                display: none !important;
             }
         }
     </style>
 </head>
 <body>
-    <!-- هێدەر -->
-    <header>
-        <div class="container header-content">
-            <div class="logo">
-                <i class="fas fa-tasks"></i>
-                <span>سیستەمی وەرگرتنی داواکاریەکان</span>
-            </div>
-            
-            <div class="stats">
-                <div class="stat-item">
-                    <div class="stat-number" id="pendingCount">٠</div>
-                    <div class="stat-label">چاوەڕوان</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" id="acceptedCount">٠</div>
-                    <div class="stat-label">وەرگیراو</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" id="totalCount">٠</div>
-                    <div class="stat-label">کۆی گشتی</div>
-                </div>
-            </div>
-        </div>
-    </header>
-    
     <div class="container">
-        <!-- تابی بەشەکان -->
-        <div class="tabs">
-            <div class="tab active" data-tab="pending">داواکاریە چاوەڕوانەکان</div>
-            <div class="tab" data-tab="accepted">داواکاریە وەرگیراوەکان</div>
-            <div class="tab" data-tab="stats">زانیاریەکان</div>
-        </div>
+        <header>
+            <h1><i class="fas fa-handshake"></i> سیستم سپۆنسەرکردن</h1>
+            <p>فاکتۆری سپۆنسەرکردن دروست بکە بۆ تیک تۆک و ئینستاگرام</p>
+            <div class="creator">لەلایەن: Farzad Programer</div>
+        </header>
         
-        <!-- بەشی چاوەڕوانەکان -->
-        <div class="tab-content active" id="pendingTab">
-            <h2>داواکاریە چاوەڕوانەکان</h2>
-            <p>ئەمە ئەو داواکارییانەن کە هێشتا وەریان نەگرتووە</p>
-            
-            <table class="requests-table">
-                <thead>
-                    <tr>
-                        <th>ژ.م</th>
-                        <th>ناو</th>
-                        <th>ژمارەی مۆبایل</th>
-                        <th>جۆری داواکاری</th>
-                        <th>شوێن</th>
-                        <th>قەبارە</th>
-                        <th>نرخ</th>
-                        <th>کات</th>
-                        <th>کردارەکان</th>
-                    </tr>
-                </thead>
-                <tbody id="pendingRequests">
-                    <!-- داواکاریەکان لە ڕێگەی JavaScript دەخرێنەڕوو -->
-                </tbody>
-            </table>
-        </div>
-        
-        <!-- بەشی وەرگیراوەکان -->
-        <div class="tab-content" id="acceptedTab">
-            <h2>داواکاریە وەرگیراوەکان</h2>
-            <p>ئەمە ئەو داواکارییانەن کە وەریان گرتووە و خەزن کراوە</p>
-            
-            <table class="requests-table">
-                <thead>
-                    <tr>
-                        <th>ژ.م</th>
-                        <th>ناو</th>
-                        <th>ژمارەی مۆبایل</th>
-                        <th>جۆری داواکاری</th>
-                        <th>شوێن</th>
-                        <th>قەبارە</th>
-                        <th>نرخ</th>
-                        <th>کاتی وەرگرتن</th>
-                        <th>کردارەکان</th>
-                    </tr>
-                </thead>
-                <tbody id="acceptedRequests">
-                    <!-- داواکاریەکان لە ڕێگەی JavaScript دەخرێنەڕوو -->
-                </tbody>
-            </table>
-        </div>
-        
-        <!-- بەشی زانیاریەکان -->
-        <div class="tab-content" id="statsTab">
-            <h2>زانیاریەکان</h2>
-            <p>زانیاری گشتی دەربارەی داواکاریەکان</p>
-            
-            <div class="info-cards">
-                <div class="info-card">
-                    <div class="info-card-header">
-                        <h3 class="info-card-title">زانیارییەکانی سیستەم</h3>
-                        <div class="info-card-icon">
-                            <i class="fas fa-info-circle"></i>
-                        </div>
-                    </div>
-                    <div class="info-card-content">
-                        <p>ئەم سیستەمە بۆ وەرگرتنی داواکاریەکانی وێبسایتی کڕین و فرۆشتی خانوو و زەوی دروست کراوە.</p>
-                        <p style="margin-top: 15px;">هەموو داواکاریەکان لە ڕێگەی API یەوە دەگەنە ئەم سیستەمە و لێرە خەزن دەکرێن.</p>
-                    </div>
+        <div class="app-container">
+            <section class="input-section">
+                <h2 class="section-title"><i class="fas fa-edit"></i> زانیاریەکان داخڵ بکە</h2>
+                
+                <div class="form-group">
+                    <label for="userName"><i class="fas fa-user"></i> ناوی بەکارهێنەر</label>
+                    <input type="text" id="userName" placeholder="ناوی کەسەکە داخڵ بکە">
                 </div>
                 
-                <div class="info-card">
-                    <div class="info-card-header">
-                        <h3 class="info-card-title">کێشەی API</h3>
-                        <div class="info-card-icon">
-                            <i class="fas fa-plug"></i>
+                <div class="form-group">
+                    <label><i class="fas fa-bullhorn"></i> جۆری سپۆنسەر</label>
+                    <div class="sponsor-type">
+                        <div class="sponsor-option">
+                            <input type="radio" id="tiktok" name="sponsorType" value="تیک تۆک" checked>
+                            <label for="tiktok">
+                                <span class="sponsor-icon"><i class="fab fa-tiktok"></i></span>
+                                <span>تیک تۆک</span>
+                            </label>
                         </div>
-                    </div>
-                    <div class="info-card-content">
-                        <p>ئەم سیستەمە لەگەڵ وێبسایتەکە لە ڕێگەی API یەوە پەیوەندی دەبەستێت.</p>
-                        <div id="apiStatus" style="margin-top: 15px; padding: 10px; border-radius: 5px; background: #d4edda; color: #155724;">
-                            <i class="fas fa-check-circle"></i> پەیوەندی API چالاکە
+                        
+                        <div class="sponsor-option">
+                            <input type="radio" id="instagram" name="sponsorType" value="ئینستاگرام">
+                            <label for="instagram">
+                                <span class="sponsor-icon"><i class="fab fa-instagram"></i></span>
+                                <span>ئینستاگرام</span>
+                            </label>
                         </div>
                     </div>
                 </div>
                 
-                <div class="info-card">
-                    <div class="info-card-header">
-                        <h3 class="info-card-title">زانیارییە تەکنیکییەکان</h3>
-                        <div class="info-card-icon">
-                            <i class="fas fa-cogs"></i>
+                <div class="form-group">
+                    <label for="amount"><i class="fas fa-dinar-sign"></i> بڕی پارەی سپۆنسەر (دینار)</label>
+                    <input type="number" id="amount" placeholder="بڕی پارە داخڵ بکە" min="0" step="1000" value="50000">
+                </div>
+                
+                <div class="form-group">
+                    <label for="invoiceNumber"><i class="fas fa-file-invoice"></i> ژمارەی فاکتۆر</label>
+                    <input type="text" id="invoiceNumber" placeholder="ژمارەی فاکتۆر" value="INV-2023-001">
+                </div>
+                
+                <div class="form-group">
+                    <label for="date"><i class="fas fa-calendar"></i> بەروار</label>
+                    <input type="date" id="date" value="">
+                </div>
+                
+                <div class="btn-group">
+                    <button class="btn-generate" id="generateBtn">
+                        <i class="fas fa-receipt"></i> دروستکردنی فاکتۆر
+                    </button>
+                    <button class="btn-pdf" id="pdfBtn">
+                        <i class="fas fa-file-pdf"></i> داگرتن وەک PDF
+                    </button>
+                    <button class="btn-print" id="printBtn">
+                        <i class="fas fa-print"></i> پرێنتکردن
+                    </button>
+                </div>
+            </section>
+            
+            <section class="preview-section">
+                <h2 class="section-title"><i class="fas fa-eye"></i> پێشبینینی فاکتۆر</h2>
+                
+                <div class="invoice" id="invoice">
+                    <div class="invoice-header">
+                        <div class="invoice-logo">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h1 class="invoice-title">فاکتۆری سپۆنسەرکردن</h1>
+                        <p class="invoice-subtitle">سیستەمی فاکتۆر سپۆنسەرکردن</p>
+                    </div>
+                    
+                    <div class="invoice-info">
+                        <div class="invoice-from">
+                            <h3 class="info-title">لەلایەن</h3>
+                            <div class="info-detail">
+                                <span class="info-label">ناو:</span>
+                                <span class="info-value" id="fromName">Farzad Programer</span>
+                            </div>
+                            <div class="info-detail">
+                                <span class="info-label">بەستەری وەسڵ:</span>
+                                <span class="info-value">farzad.programer</span>
+                            </div>
+                        </div>
+                        
+                        <div class="invoice-to">
+                            <h3 class="info-title">بۆ</h3>
+                            <div class="info-detail">
+                                <span class="info-label">ناو:</span>
+                                <span class="info-value" id="toName">ناوی بەکارهێنەر</span>
+                            </div>
+                            <div class="info-detail">
+                                <span class="info-label">جۆری سپۆنسەر:</span>
+                                <span class="info-value" id="sponsorTypeText">تیک تۆک</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="info-card-content">
-                        <p><strong>نیشاندانی API:</strong> https://systam-wargrtn.vercel.app/api/requests</p>
-                        <p><strong>ناردن بۆ API:</strong> POST /api/requests</p>
-                        <p><strong>وەرگرتنی داواکاریەکان:</strong> GET /api/requests</p>
-                        <p><strong>نوێکردنەوەی داواکاری:</strong> PUT /api/requests?id=:id</p>
+                    
+                    <div class="invoice-details">
+                        <div class="detail-row">
+                            <span class="detail-label">ژمارەی فاکتۆر:</span>
+                            <span class="detail-value" id="invoiceNumberText">INV-2023-001</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">بەروار:</span>
+                            <span class="detail-value" id="dateText">2023-11-15</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">شوێن:</span>
+                            <span class="detail-value">هەرێمی کوردستان</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">جۆری پارە:</span>
+                            <span class="detail-value">دیناری عێراقی (IQD)</span>
+                        </div>
+                    </div>
+                    
+                    <div class="total-row">
+                        <span>کۆی گشتی:</span>
+                        <span id="totalAmount">50,000 دینار</span>
+                    </div>
+                    
+                    <div class="signature">
+                        <div class="signature-box">
+                            <p>واژۆی سپۆنسەر</p>
+                            <div class="signature-line"></div>
+                            <p id="sponsorName">ناوی کەسەکە</p>
+                        </div>
+                        <div class="signature-box">
+                            <p>واژۆی بەڕێوەبەر</p>
+                            <div class="signature-line"></div>
+                            <p>Farzad Programer</p>
+                        </div>
+                    </div>
+                    
+                    <div class="invoice-footer">
+                        <p>سپاس بۆ هاوکاریەکەتان! <i class="fas fa-heart" style="color: #ff416c;"></i></p>
+                        <p>کۆتاییەکەی فاکتۆرەکە - بە وەسڵە لەگەڵماندا بن: farzad.programer</p>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
     </div>
-    
-    <!-- فووتەر -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>دەربارەی سیستەمەکە</h3>
-                    <p>ئەم سیستەمە بۆ وەرگرتنی و بەڕێوەبردنی داواکاریەکانی کڕین و فرۆشتی خانوو و زەوی دروست کراوە.</p>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>پەیوەندیمان پێوە بکە</h3>
-                    <p><i class="fas fa-phone"></i> ٠٧٥٠ ٩٨٧ ٦٥٤٣</p>
-                    <p><i class="fas fa-envelope"></i> system@house-land.com</p>
-                    <p><i class="fas fa-map-marker-alt"></i> هەولێر، هەرێمی کوردستان</p>
-                </div>
-                
-                <div class="footer-section">
-                    <h3>کاتەکانی کارکردن</h3>
-                    <p>شەممە - پێنجشەممە: ٢٤ کاتژمێر</p>
-                    <p>سیستەمەکە بەردەوام چالاکە</p>
-                </div>
-            </div>
-            
-            <div class="copyright">
-                <p>هەموو مافەکان پارێزراون © ٢٠٢٣ سیستەمی وەرگرتنی داواکاریەکان</p>
-            </div>
-        </div>
-    </footer>
-    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
-        // بارکردنی داواکاریەکان لە API
-        async function loadRequestsFromAPI() {
-            try {
-                const response = await fetch('/api/requests');
-                const result = await response.json();
-                
-                if (result.success) {
-                    updateDisplay(result.requests);
-                    updateStats(result.stats);
-                }
-            } catch (error) {
-                console.error('هەڵە لە بارکردنی داواکاریەکان:', error);
-                // لە کاتی هەڵەدا، نمونەیەکی ساختە پیشان بدە
-                displaySampleData();
-            }
-        }
-        
-        // نیشاندانی نمونەی داتا (لە کاتی هەڵەی API)
-        function displaySampleData() {
-            const sampleRequests = [
-                {
-                    id: 1,
-                    name: "عەلی محەممەد",
-                    phone: "07501234567",
-                    type: "فرۆشتی خانوو",
-                    location: "شۆرش",
-                    size: "150 م²",
-                    price: "١٠٠،٠٠٠،٠٠٠ دینار",
-                    date: "٢٠٢٣-١٠-٠٥ ١٠:٣٠",
-                    status: "pending",
-                    sellingType: "تاپۆ"
-                },
-                {
-                    id: 2,
-                    name: "سارە عەبدوڵڵا",
-                    phone: "07507654321",
-                    type: "کڕینی زەوی",
-                    location: "گوڵان ستی",
-                    size: "٥٠٠ م²",
-                    price: "٥٠،٠٠٠،٠٠٠ دینار",
-                    date: "٢٠٢٣-١٠-٠٤ ١٤:٢٠",
-                    status: "pending",
-                    sellingType: "کارت"
-                },
-                {
-                    id: 3,
-                    name: "حەسەن کەریم",
-                    phone: "07509876543",
-                    type: "فرۆشتی زەوی",
-                    location: "ئارام گاردن",
-                    size: "١٠٠٠ م²",
-                    price: "٢٠٠،٠٠٠،٠٠٠ دینار",
-                    date: "٢٠٢٣-١٠-٠٣ ٠٩:١٥",
-                    status: "accepted",
-                    acceptedDate: "٢٠٢٣-١٠-٠٣ ١١:٤٥",
-                    sellingType: "تاپۆ"
-                }
-            ];
+        // دانانی بەرواری ئەمڕۆ بەشێوەیەکی خۆکار
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('date').value = today;
+            document.getElementById('dateText').textContent = today;
             
-            updateDisplay(sampleRequests);
-            
-            const stats = {
-                pending: 2,
-                accepted: 1,
-                rejected: 0,
-                total: 3
-            };
-            
-            updateStats(stats);
-        }
-        
-        // نوێکردنەوەی نیشاندانەکان
-        function updateDisplay(requests) {
-            const pendingTbody = document.getElementById('pendingRequests');
-            const acceptedTbody = document.getElementById('acceptedRequests');
-            
-            // پاککردنەوەی خشتەکان
-            pendingTbody.innerHTML = '';
-            acceptedTbody.innerHTML = '';
-            
-            // زیادکردنی داواکاریەکان بەپێی دۆخەکەیان
-            requests.forEach(request => {
-                const row = document.createElement('tr');
-                
-                if (request.status === 'pending') {
-                    row.innerHTML = `
-                        <td>${request.id}</td>
-                        <td>${request.name}</td>
-                        <td>${request.phone}</td>
-                        <td>${request.type}</td>
-                        <td>${request.location}</td>
-                        <td>${request.size}</td>
-                        <td>${request.price}</td>
-                        <td>${request.date}</td>
-                        <td>
-                            <button class="action-btn btn-accept" onclick="acceptRequest(${request.id})">وەرگرتن</button>
-                            <button class="action-btn btn-reject" onclick="rejectRequest(${request.id})">ڕەتکردنەوە</button>
-                            <button class="action-btn btn-view" onclick="viewRequest(${request.id})">بینین</button>
-                        </td>
-                    `;
-                    pendingTbody.appendChild(row);
-                } else if (request.status === 'accepted') {
-                    row.innerHTML = `
-                        <td>${request.id}</td>
-                        <td>${request.name}</td>
-                        <td>${request.phone}</td>
-                        <td>${request.type}</td>
-                        <td>${request.location}</td>
-                        <td>${request.size}</td>
-                        <td>${request.price}</td>
-                        <td>${request.acceptedDate || request.date}</td>
-                        <td>
-                            <button class="action-btn btn-view" onclick="viewRequest(${request.id})">بینینی وردەکاری</button>
-                        </td>
-                    `;
-                    acceptedTbody.appendChild(row);
-                }
-            });
-        }
-        
-        // نوێکردنەوەی ئامارەکان
-        function updateStats(stats) {
-            document.getElementById('pendingCount').textContent = stats.pending;
-            document.getElementById('acceptedCount').textContent = stats.accepted;
-            document.getElementById('totalCount').textContent = stats.total;
-        }
-        
-        // وەرگرتنی داواکاری
-        async function acceptRequest(id) {
-            try {
-                const response = await fetch(`/api/requests?id=${id}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ status: 'accepted' })
-                });
-                
-                const result = await response.json();
-                
-                if (result.success) {
-                    loadRequestsFromAPI(); // نوێکردنەوەی لیستەکە
-                    alert(`داواکاری ژمارە ${id} وەرگیرا`);
-                } else {
-                    alert('کێشەیەک ڕوویدا: ' + result.message);
-                }
-            } catch (error) {
-                console.error('هەڵە:', error);
-                alert('هەڵەیەک ڕوویدا لە پەیوەندیدا');
-            }
-        }
-        
-        // ڕەتکردنەوەی داواکاری
-        async function rejectRequest(id) {
-            if (confirm('دڵنیایت کە دەتەوێت ئەم داواکاریە ڕەت بکەیتەوە؟')) {
-                try {
-                    const response = await fetch(`/api/requests?id=${id}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({ status: 'rejected' })
-                    });
-                    
-                    const result = await response.json();
-                    
-                    if (result.success) {
-                        loadRequestsFromAPI(); // نوێکردنەوەی لیستەکە
-                        alert(`داواکاری ژمارە ${id} ڕەتکرایەوە`);
-                    } else {
-                        alert('کێشەیەک ڕوویدا: ' + result.message);
-                    }
-                } catch (error) {
-                    console.error('هەڵە:', error);
-                    alert('هەڵەیەک ڕوویدا لە پەیوەندیدا');
-                }
-            }
-        }
-        
-        // بینینی وردەکارییەکانی داواکاری
-        async function viewRequest(id) {
-            try {
-                const response = await fetch(`/api/requests?id=${id}`);
-                const result = await response.json();
-                
-                if (result.success && result.requests && result.requests.length > 0) {
-                    const request = result.requests[0];
-                    
-                    alert(`وردەکارییەکانی داواکاری ژمارە ${id}:
-ناو: ${request.name}
-ژمارەی مۆبایل: ${request.phone}
-جۆری داواکاری: ${request.type}
-شوێن: ${request.location}
-قەبارە: ${request.size}
-نرخ: ${request.price}
-جۆری فرۆشتن: ${request.sellingType || 'دیاری نەکراو'}
-کاتی ناردن: ${request.date}
-دۆخ: ${request.status === 'pending' ? 'چاوەڕوان' : 'وەرگیراو'}
-${request.status === 'accepted' ? `کاتی وەرگرتن: ${request.acceptedDate}` : ''}`);
-                } else {
-                    // ئەگەر داواکاریەکە نەدۆزرایەوە لە API، لە memory دا بگەڕێ
-                    alert('داواکاریەکە نەدۆزرایەوە');
-                }
-            } catch (error) {
-                console.error('هەڵە:', error);
-                alert('داواکاریەکە نەدۆزرایەوە');
-            }
-        }
-        
-        // چێکردنی API (نمونەی ساختە)
-        function simulateAPI() {
-            const apiStatus = document.getElementById('apiStatus');
-            
-            // نمونەی پەیوەندیکردن بە API
-            setInterval(() => {
-                apiStatus.innerHTML = `<i class="fas fa-check-circle"></i> پەیوەندی API چالاکە - ${new Date().toLocaleTimeString('ar-IQ')}`;
-                apiStatus.style.background = "#d4edda";
-                apiStatus.style.color = "#155724";
-            }, 5000);
-            
-            // نوێکردنەوەی لیستەکە هەر ١٠ چرکە جارێک
-            setInterval(() => {
-                loadRequestsFromAPI();
-            }, 10000);
-        }
-        
-        // گۆڕینی نێوان بەشەکان
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                const tabId = this.dataset.tab;
-                
-                // لابردنی چالاکی لە هەموو تابەکان
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                
-                // زیادکردنی چالاکی بۆ تابە هەڵبژێردراوەکە
-                this.classList.add('active');
-                document.getElementById(`${tabId}Tab`).classList.add('active');
-            });
+            // بەکارهێنەرێکی نموونە داخڵ بکە
+            document.getElementById('userName').value = "عەلی محەممەد";
+            updateInvoice();
         });
         
-        // دەستپێکردنی سیستەمەکە
-        document.addEventListener('DOMContentLoaded', function() {
-            loadRequestsFromAPI();
-            simulateAPI();
+        // هێنانی فاکتۆرەکە
+        document.getElementById('generateBtn').addEventListener('click', updateInvoice);
+        
+        // بەڕێوەبردنی پرێنتکردن
+        document.getElementById('printBtn').addEventListener('click', function() {
+            window.print();
+        });
+        
+        // داگرتن وەک PDF
+        document.getElementById('pdfBtn').addEventListener('click', function() {
+            const invoice = document.getElementById('invoice');
+            const options = {
+                margin: 10,
+                filename: 'فاکتۆری_سپۆنسەرکردن.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            
+            html2pdf().from(invoice).set(options).save();
+        });
+        
+        // نوێکردنەوەی فاکتۆرەکە
+        function updateInvoice() {
+            const userName = document.getElementById('userName').value || "ناوی بەکارهێنەر";
+            const sponsorType = document.querySelector('input[name="sponsorType"]:checked').value;
+            const amount = document.getElementById('amount').value || "0";
+            const invoiceNumber = document.getElementById('invoiceNumber').value || "INV-2023-001";
+            const date = document.getElementById('date').value || new Date().toISOString().split('T')[0];
+            
+            // فۆرماتکردنی بڕی پارە
+            const formattedAmount = parseInt(amount).toLocaleString('ar-IQ') + ' دینار';
+            
+            // نوێکردنەوەی ناوەڕۆکی فاکتۆرەکە
+            document.getElementById('toName').textContent = userName;
+            document.getElementById('sponsorName').textContent = userName;
+            document.getElementById('sponsorTypeText').textContent = sponsorType;
+            document.getElementById('invoiceNumberText').textContent = invoiceNumber;
+            document.getElementById('dateText').textContent = date;
+            document.getElementById('totalAmount').textContent = formattedAmount;
+            
+            // گۆڕینی ڕەنگی فاکتۆر بەپێی جۆری سپۆنسەر
+            const invoiceLogo = document.querySelector('.invoice-logo i');
+            const invoiceTitle = document.querySelector('.invoice-title');
+            
+            if (sponsorType === 'تیک تۆک') {
+                invoiceLogo.style.color = '#000000';
+                invoiceTitle.style.color = '#000000';
+            } else {
+                invoiceLogo.style.color = '#E4405F';
+                invoiceTitle.style.color = '#E4405F';
+            }
+        }
+        
+        // نوێکردنەوەی خۆکار کاتێک خانەکان دەگۆڕدرێن
+        document.getElementById('userName').addEventListener('input', updateInvoice);
+        document.getElementById('amount').addEventListener('input', updateInvoice);
+        document.getElementById('invoiceNumber').addEventListener('input', updateInvoice);
+        document.getElementById('date').addEventListener('change', updateInvoice);
+        
+        // نوێکردنەوەی فاکتۆر کاتێک جۆری سپۆنسەر دەگۆڕدرێت
+        document.querySelectorAll('input[name="sponsorType"]').forEach(radio => {
+            radio.addEventListener('change', updateInvoice);
         });
     </script>
 </body>
