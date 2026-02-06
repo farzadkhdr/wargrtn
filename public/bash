@@ -1,9 +1,0 @@
-# پێکهێنانی هەر یەک لە فایڵەکانی CGI
-g++ -o /usr/lib/cgi-bin/patient_add.cgi patient_add.cpp \
-    -lmysqlcppconn -I/usr/include/mysql -L/usr/lib/mysql
-
-g++ -o /usr/lib/cgi-bin/patient_search.cgi patient_search.cpp \
-    -lmysqlcppconn -I/usr/include/mysql -L/usr/lib/mysql
-
-# دەسکاریکردنی مافی جێبەجێکردن
-chmod +x /usr/lib/cgi-bin/*.cgi
