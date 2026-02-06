@@ -1,0 +1,17 @@
+from flask import Flask, render_template
+import mysql.connector
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    conn = mysql.connector.connect(
+        host="localhost",
+        user="root",
+        password="",
+        database="simple_clinic"
+    )
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM patients")
+    patients = cursor.fetchall()
+    return render_template('index.html', patients=patients)
